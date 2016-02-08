@@ -1,6 +1,6 @@
-function [theta3_deg, theta4_deg, xp, yp] = four_bar_func(angles, lengths, p, options)
-%[A3 A4 Xp Yp] = four_bar_func(ANGLES, LENGTHS, P) will solve for two unknown 
-%angles of a four bar mechanism and plot the mechanism following standard convention.
+function [angles, lengths, points, p] = four_bar_func(angles, lengths, p, options)
+%[angles, lengths, points, p] = four_bar_func(angles, lengths, p, options)
+%will solve for two unknown angles of a four bar mechanism and plot the mechanism following standard convention.
 %The unknown angles are 3 and 4 as denoted below. Xp and Yp are the x and y
 %locations of the point P which is on fixed to the link 2.
 %   ANGLES is an array of four angles provided in degrees [a1 a2 a3 a4].
@@ -20,21 +20,28 @@ r4 = lengths(4);
 
 guess = [theta3 theta4];
 
-[unknownAngles] = fsolve(@four_bar_equations, guess, [], angles, lengths);
+optionsFsolve = optimset('Display', 'off');
 
-theta3 = unknownAngles(1);
-theta4 = unknownAngles(2);
+[unknowns] = fsolve(@four_bar_equations, guess, optionsFsolve, angles, lengths);
 
-xp = lengths(2)*cos(deg2rad(angles(2))) + p(1)*cos(theta3);
-yp = lengths(2)*sin(deg2rad(angles(2))) + p(2)*sin(theta3);
+theta3 = unknowns(1);
+theta4 = unknowns(2);
 
-theta3_deg = rad2deg(theta3);
-theta4_deg = rad2deg(theta4);
+angles(3) = theta3;
+angles(4) = theta4;
 
-for i=1:4
-    x(:,i) = [0 r2*cos(deg2rad(theta2)) r2*cos(deg2rad(theta2))+r3*cos(deg2rad(theta3)) r1*cos(deg2rad(theta1))];
-    y(:,i) = [0 r2*sin(deg2rad(theta2)) r2*sin(deg2rad(theta2))+r3*sin(deg2rad(theta3)) r1*sin(deg2rad(theta1))];
-end
+pAngle = atand(p(1)/p(2));
+pLength = sqrt(p(1)^2 + p(2)^2);
+
+xp = lengths(2)*cosd(angles(2)) + p(1)*cosd(angles(3)) + p(2)*cosd(angles(3) + 90);
+yp = lengths(2)*sind(angles(2)) + p(1)*sind(angles(3)) + p(2)*sind(angles(3) + 90);
+
+%p = [xp yp];
+
+x = [0 r2*cosd(angles(2)) r2*cosd(angles(2))+r3*cosd(angles(3)) r1*cosd(angles(1))];
+y = [0 r2*sind(angles(2)) r2*sind(angles(2))+r3*sind(angles(3)) r1*sind(angles(1))];
+
+points = [x' y'];
 
 if(options(1) == 1) %would you like to plot?
     figure(1); clf;
@@ -48,6 +55,42 @@ if(options(1) == 1) %would you like to plot?
     scatter(xp,yp);
     grid on
     axis equal
+    hold on
+end
+
+if(options(2) == 1) %would you like to plot the path of the coupler link...?
+    
+    anglesTemp = angles;
+    lengthsTemp = lengths;
+    guessTemp = [anglesTemp(3) anglesTemp(4)];
+    
+    fullRound = linspace(15,375,100);
+    
+    for i=1:length(fullRound)
+        [unknownsTemp] = fsolve(@four_bar_equations, guessTemp, optionsFsolve, [anglesTemp(1) fullRound(i) anglesTemp(3) anglesTemp(4)], lengthsTemp);
+        theta3Temp(i) = unknownsTemp(1);
+        theta4Temp(i) = unknownsTemp(2);
+        xpTemp(i) = lengths(2)*cosd(fullRound(i)) + p(1)*cosd(theta3Temp(i)) + p(2)*cosd(theta3Temp(i) - sign(pAngle)*90);
+        ypTemp(i) = lengths(2)*sind(fullRound(i)) + p(1)*sind(theta3Temp(i)) + p(2)*sind(theta3Temp(i) - sign(pAngle)*90);
+%         if((i~=1) && (sqrt((xpTemp(i) - xpTemp(i-1))^2 + (ypTemp(i) - ypTemp(i-1))^2)>=(.1*mean(lengths))))
+%             guessTemp(1) = guessTemp(1) + 1;
+%             [unknownsTemp] = fsolve(@four_bar_equations, guessTemp, [], anglesTemp, lengthsTemp);
+%             theta3Temp(i) = unknownsTemp(1);
+%             theta4Temp(i) = unknownsTemp(2);
+%             if( guessTemp(1) > 180 && (sqrt((xpTemp(i) - xpTemp(i-1))^2 + (ypTemp(i) - ypTemp(i-1))^2)>=(.1*mean(lengths))) )
+%                  guessTemp(2) = guessTemp(2) - 2;
+%                 [unknownsTemp] = fsolve(@four_bar_equations, guessTemp, [], anglesTemp, lengthsTemp);
+%                 theta3Temp(i) = unknownsTemp(1);
+%                 theta4Temp(i) = unknownsTemp(2);
+%                 end
+%         end
+        xpTemp(i) = lengths(2)*cosd(fullRound(i)) + p(1)*cosd(theta3Temp(i)) + p(2)*cosd(theta3Temp(i) + 90);
+        ypTemp(i) = lengths(2)*sind(fullRound(i)) + p(1)*sind(theta3Temp(i)) + p(2)*sind(theta3Temp(i) + 90);
+    end
+    
+    figure(1);
+    hold on;
+    plot(xpTemp, ypTemp);
 end
 
 end

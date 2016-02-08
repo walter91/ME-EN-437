@@ -1,4 +1,4 @@
-function [f] = inverted_four_bar_crank_slider_equations(unknown, angles, lengths)
+function [f] = inverted_four_bar_crank_slider_equations(unknown, angles, lengths, gamma)
 
 r1 = lengths(1);
 r2 = lengths(2);
@@ -9,7 +9,7 @@ theta1 = angles(1);
 theta2 = angles(2);
 
 theta4 = unknown(1);
-theta3 = theta4 + 45;
+theta3 = theta4 + gamma;
 
 r3 = unknown(2);
 
