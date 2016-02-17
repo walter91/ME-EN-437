@@ -4,6 +4,7 @@ clear
 %Given:
 beta2 = 5*pi/180;
 beta3 = 10*pi/180;
+
 gamma2 = 10*beta2;
 gamma3 = 10*beta3;
 

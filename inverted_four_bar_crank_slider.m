@@ -1,4 +1,4 @@
-function [theta4, r3, xp, yp] = inverted_four_bar_crank_slider(angles, lengths, gamma, p, options)
+function [angles, angularRates, lengths, linearRates, points, p, vp] = inverted_four_bar_crank_slider(angles, lengths, gamma, p, options)
 %[A3 L1 Xp Yp] = four_bar_slider(ANGLES, LENGTHS, P) will solve for an unknown angle (3)
 %and an unknown length (1) for a four bar mechanism and plot the mechanism
 %following standard convention. Xp and Yp are the x and y
@@ -26,7 +26,7 @@ guess = [theta4 r3];
 
 theta4 = unknowns(1);
 angles(4) = theta4;
-angles(3) = theta4 + 45;
+angles(3) = theta4 + gamma;
 theta3 = angles(3);
 r3 = unknowns(2);
 lengths(3) = r3;
@@ -34,10 +34,10 @@ lengths(3) = r3;
 xp = lengths(2)*cosd(angles(2)) - p(2)*cosd(theta3);
 yp = lengths(2)*sind(angles(2)) + p(2)*sind(theta3);
 
-x(1:4) = [0 r2*cosd(theta2) r1*cosd(theta1)+r4*cosd(theta4) r1*cosd(theta1)];
-y(1:4) = [0 r2*sind(theta2) r1*sind(theta1)+r4*sind(theta4) r1*sind(theta1)];
+x(1:4) = [0 r2*cosd(angles(2)) r1*cosd(angles(1))+r4*cosd(angles(4)) r1*cosd(angles(1))];
+y(1:4) = [0 r2*sind(angles(2)) r1*sind(angles(1))+r4*sind(angles(4)) r1*sind(angles(1))];
 
-
+points = [x' y'];
 
 if(options(1) == 1) %would you like to plot?
     figure(1); clf;

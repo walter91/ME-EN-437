@@ -1,5 +1,5 @@
-function [angles, lengths, points, p] = four_bar_func(angles, lengths, p, options)
-%[angles, lengths, points, p] = four_bar_func(angles, lengths, p, options)
+function [angles, angularRates, lengths, linearRates, points, p, vp] = four_bar_func(angles, omega2, lengths, p, options)
+%[angles, angularRates, lengths, linearRates, points, p, vp] = four_bar_func(angles, omega2, lengths, p, options)
 %will solve for two unknown angles of a four bar mechanism and plot the mechanism following standard convention.
 %The unknown angles are 3 and 4 as denoted below. Xp and Yp are the x and y
 %locations of the point P which is on fixed to the link 2.
@@ -30,18 +30,44 @@ theta4 = unknowns(2);
 angles(3) = theta3;
 angles(4) = theta4;
 
-pAngle = atand(p(1)/p(2));
 pLength = sqrt(p(1)^2 + p(2)^2);
+% pAngle = rad2deg(atan2(p(1)*sind(angles(3)) + p(2)*sind(angles(3) + 90),p(1)*cosd(angles(3)) + p(2)*cosd(angles(3) + 90)));
+
 
 xp = lengths(2)*cosd(angles(2)) + p(1)*cosd(angles(3)) + p(2)*cosd(angles(3) + 90);
 yp = lengths(2)*sind(angles(2)) + p(1)*sind(angles(3)) + p(2)*sind(angles(3) + 90);
 
-%p = [xp yp];
+p = [xp yp];
 
 x = [0 r2*cosd(angles(2)) r2*cosd(angles(2))+r3*cosd(angles(3)) r1*cosd(angles(1))];
 y = [0 r2*sind(angles(2)) r2*sind(angles(2))+r3*sind(angles(3)) r1*sind(angles(1))];
 
 points = [x' y'];
+
+pAngle = rad2deg(atan2(yp - y(2),xp - x(2)));
+
+%% Rates calculations
+
+angularRates(1) = 0;
+angularRates(2) = omega2;
+angularRates(3) = (lengths(2)*angularRates(2)/lengths(3))*(sind(angles(4)) - sind(angles(2))/(sind(angles(3) - angles(4))));
+angularRates(4) = (lengths(2)*angularRates(2)/lengths(4))*(sind(angles(2)) - sind(angles(3))/(sind(angles(4) - angles(3))));
+
+linearRates(1,:) = [0, 0];
+linearRates(2,:) = [lengths(2)*angularRates(2)*-sind(angles(2)), lengths(2)*angularRates(2)*cosd(angles(2))];
+linearRates(3,:) = [lengths(4)*angularRates(4)*-sind(angles(4)), lengths(4)*angularRates(4)*cosd(angles(4))];
+linearRates(4,:) = [0, 0];
+
+
+% pLength = sqrt(p(1)^2 + p(2)^2);
+% pAngle = rad2deg(atan2(p(1)*sind(angles(3)) + p(2)*sind(angles(3) + 90),p(1)*cosd(angles(3)) + p(2)*cosd(angles(3) + 90)));
+
+vp = [linearRates(2,1) + (pLength*angularRates(3)*-sind(pAngle)),...
+    linearRates(2,2) + (pLength*angularRates(3)*cosd(pAngle))];
+
+
+
+%% Plotting based on options
 
 if(options(1) == 1) %would you like to plot?
     figure(1); clf;

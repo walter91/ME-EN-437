@@ -32,7 +32,7 @@ unknowns(19) = -3*pi/8;%g4
 unknowns(20) = -pi/2;%g5
 
 
-solution = fsolve(@psynthesis,unknowns,[],knowns);
+solution = fsolve(@psynthesis, unknowns, [], knowns);
 output = psynthesis(solution,knowns) %This just checks to make sure all of the
 %equations are 0 at the solution found by fsolve.
 
