@@ -1,4 +1,4 @@
-function [theta3, r1, xp, yp] = four_bar_slider(angles, lengths, p, options)
+function [angles, angularRates, lengths, linearRates, points, p] = four_bar_slider(angles, omega2, lengths, p, options)
 %[A3 L1 Xp Yp] = four_bar_slider(ANGLES, LENGTHS, P) will solve for an unknown angle (3)
 %and an unknown length (1) for a four bar mechanism and plot the mechanism
 %following standard convention. Xp and Yp are the x and y
@@ -24,29 +24,39 @@ guess = [theta3 r1];
 
 [unknowns] = fsolve(@four_bar_slider_equations, guess, [], angles, lengths);
 
-theta3 = rad2deg(unknowns(1));
-r1 = unknowns(2);
+angles(3) = unknowns(1);
+lengths(1) = unknowns(2);
 
-xp = lengths(2)*cos(deg2rad(angles(2))) + p(1)*cos(theta3);
-yp = lengths(2)*sin(deg2rad(angles(2))) + p(2)*sin(theta3);
+p(1) = lengths(2)*cosd(angles(2)) + p(1)*cosd(angles(3));
+p(2) = lengths(2)*sind(angles(2)) + p(2)*sind(angles(3));
 
-theta3_deg = rad2deg(theta3);
-theta4_deg = rad2deg(theta4);
+x = [0 lengths(2)*cosd(angles(2)) lengths(2)*cosd(angles(2))+lengths(3)*cosd(angles(3)) lengths(1)*cosd(angles(1))];
+y = [0 lengths(2)*sind(angles(2)) lengths(2)*sind(angles(2))+lengths(3)*sind(angles(3)) lengths(1)*sind(angles(1))];
 
-for i=1:4
-    x(:,i) = [0 r2*cos(deg2rad(theta2)) r2*cos(deg2rad(theta2))+r3*cos(deg2rad(theta3)) r1*cos(deg2rad(theta1))];
-    y(:,i) = [0 r2*sin(deg2rad(theta2)) r2*sin(deg2rad(theta2))+r3*sin(deg2rad(theta3)) r1*sin(deg2rad(theta1))];
-end
+points = [x' y'];
 
-checkLengths(1) = sqrt(((x(4))- (x(1)))^2 + ((y(4)) - (y(1)))^2);
-checkLengths(2) = sqrt(((x(1))- (x(2)))^2 + ((y(1)) - (y(2)))^2);
-checkLengths(3) = sqrt(((x(2))- (x(3)))^2 + ((y(2)) - (y(3)))^2);
-checkLengths(4) = sqrt(((x(3))- (x(4)))^2 + ((y(3)) - (y(4)))^2);
 
-disp(checkLengths);
+% checkLengths(1) = sqrt(((x(4))- (x(1)))^2 + ((y(4)) - (y(1)))^2);
+% checkLengths(2) = sqrt(((x(1))- (x(2)))^2 + ((y(1)) - (y(2)))^2);
+% checkLengths(3) = sqrt(((x(2))- (x(3)))^2 + ((y(2)) - (y(3)))^2);
+% checkLengths(4) = sqrt(((x(3))- (x(4)))^2 + ((y(3)) - (y(4)))^2);
+% 
+% disp(checkLengths);
+
+
+angularRates(1) = 0;
+angularRates(2) = omega2;
+angularRates(3) = lengths(2)*cosd(angles(2))*angularRates(2)/(lengths(3)*cosd(angles(3)));
+angularRates(4) = 0;
+
+linearRates(1,:) = [0, 0];
+linearRates(2,:) = [lengths(2)*angularRates(2)*-sind(angles(2)), lengths(2)*angularRates(2)*cosd(angles(2))];
+linearRates(3,:) = [-lengths(2)*angularRates(2)*sind(angles(2))+lengths(3)*angularRates(3)*sind(angles(3)), 0];
+linearRates(4,:) = linearRates(3,:);
+
 
 if(options(1) == 1) %would you like to plot?
-    figure(1); clf;
+    figure(2); clf;
     plot([x(1) x(2)], [y(1) y(2)], 'r',[x(2) x(3)], [y(2) y(3)], 'g',...
         [x(3) x(4)], [y(3) y(4)], 'b',[x(4) x(1)], [y(4) y(1)], 'y')
     hold on

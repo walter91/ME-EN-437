@@ -1,0 +1,210 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>hw6_3</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-02-18"><meta name="DC.source" content="hw6_3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">HW 6 #3, Walter Coe, 2-17-16</a></li><li><a href="#2">Setup</a></li><li><a href="#3">First four bar linkage</a></li><li><a href="#4">Crank Slider Analysis</a></li><li><a href="#5">Report</a></li></ul></div><h2>HW 6 #3, Walter Coe, 2-17-16<a name="1"></a></h2><pre class="codeinput"> clear; clc;
+</pre><h2>Setup<a name="2"></a></h2><pre class="codeinput"> r1x = 7.5;
+ r1y = 5;
+ r2 = 2;
+ r3 = 6;
+ r4 = 6;
+ r5 = 6;
+
+ r1 = sqrt(r1x^2 + r1y^2);
+ theta1 = rad2deg(atan2(r1y, r1x));
+
+ theta2 = 45;
+ <span class="comment">%unkown: theta3, theta4, theta5</span>
+
+ omega1 = 0;
+ omega2 = rad2deg(100*2*pi/60);
+ <span class="comment">%unkown: omega3, omega4, omega5</span>
+</pre><h2>First four bar linkage<a name="3"></a></h2><pre class="codeinput"> [angles, angularRates, lengths, linearRates, points, p, vp] = four_bar_func([theta1 theta2 -45 -45], omega2, [r1 r2 r3 r4], [0 0], [1 0])
+
+ theta3Solved = angles(3);
+ theta4Solved = angles(4);
+
+ Va = linearRates(2,:);
+ Vb = linearRates(3,:);
+
+ omega3Solved = angularRates(3);
+ omega4Solved = angularRates(4);
+
+ point3 = points(3,:);
+</pre><pre class="codeoutput">
+angles =
+
+   33.6901   45.0000  -23.4329  -95.5533
+
+
+angularRates =
+
+         0  600.0000 -347.6594   57.8500
+
+
+lengths =
+
+    9.0139    2.0000    6.0000    6.0000
+
+
+linearRates =
+
+         0         0
+ -848.5281  848.5281
+  345.4712  -33.5895
+         0         0
+
+
+points =
+
+         0         0
+    1.4142    1.4142
+    6.9194   -0.9718
+    7.5000    5.0000
+
+
+p =
+
+    1.4142    1.4142
+
+
+vp =
+
+ -848.5281  848.5281
+
+</pre><img vspace="5" hspace="5" src="hw6_3_01.png" alt=""> <h2>Crank Slider Analysis<a name="4"></a></h2><pre class="codeinput"> <span class="comment">%[angles, angularRates, lengths, linearRates, points, p] = four_bar_slider([0 (90-theta4Solved) 30 90], omega4Solved, [9 r4 r5 0], [0 0], 1)</span>
+
+<span class="comment">%  theta5Solved = 180-rad2deg(asin((r1x-point3(1))/(r5)));</span>
+<span class="comment">%  omega5Solved = -(r4*cosd(90-theta4Solved)*omega4Solved/(r5*cosd(theta5Solved)));</span>
+<span class="comment">%</span>
+<span class="comment">%  Vc = -r4*omega4Solved*sind(90-theta4Solved)+r5*omega5Solved*sind(theta5Solved);</span>
+ Vc = 2*Vb(1); <span class="comment">%by symmetry...</span>
+</pre><h2>Report<a name="5"></a></h2><pre class="codeinput"> disp([<span class="string">'Va is: '</span>  num2str(sqrt(Va(1)^2 + Va(2)^2))  <span class="string">' cm/sec'</span>]);
+ disp([<span class="string">'Vb is: '</span>  num2str(sqrt(Vb(1)^2 + Vb(2)^2))  <span class="string">' cm/sec'</span>]);
+ disp([<span class="string">'Vc is: '</span>  num2str(Vc)  <span class="string">' cm/sec'</span>]);
+</pre><pre class="codeoutput">Va is: 1200 cm/sec
+Vb is: 347.1003 cm/sec
+Vc is: 690.9424 cm/sec
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% HW 6 #3, Walter Coe, 2-17-16
+ clear; clc;
+ 
+ %% Setup
+ 
+ r1x = 7.5;
+ r1y = 5;
+ r2 = 2;
+ r3 = 6;
+ r4 = 6;
+ r5 = 6;
+ 
+ r1 = sqrt(r1x^2 + r1y^2);
+ theta1 = rad2deg(atan2(r1y, r1x));
+ 
+ theta2 = 45;
+ %unkown: theta3, theta4, theta5
+ 
+ omega1 = 0;
+ omega2 = rad2deg(100*2*pi/60);
+ %unkown: omega3, omega4, omega5
+ 
+ %% First four bar linkage
+ 
+ [angles, angularRates, lengths, linearRates, points, p, vp] = four_bar_func([theta1 theta2 -45 -45], omega2, [r1 r2 r3 r4], [0 0], [1 0])
+ 
+ theta3Solved = angles(3);
+ theta4Solved = angles(4);
+ 
+ Va = linearRates(2,:);
+ Vb = linearRates(3,:);
+ 
+ omega3Solved = angularRates(3);
+ omega4Solved = angularRates(4);
+ 
+ point3 = points(3,:);
+ 
+ %% Crank Slider Analysis
+ 
+ %[angles, angularRates, lengths, linearRates, points, p] = four_bar_slider([0 (90-theta4Solved) 30 90], omega4Solved, [9 r4 r5 0], [0 0], 1)
+ 
+%  theta5Solved = 180-rad2deg(asin((r1x-point3(1))/(r5)));
+%  omega5Solved = -(r4*cosd(90-theta4Solved)*omega4Solved/(r5*cosd(theta5Solved)));
+%  
+%  Vc = -r4*omega4Solved*sind(90-theta4Solved)+r5*omega5Solved*sind(theta5Solved);
+ Vc = 2*Vb(1); %by symmetry...
+ 
+ %% Report
+ 
+ disp(['Va is: '  num2str(sqrt(Va(1)^2 + Va(2)^2))  ' cm/sec']);
+ disp(['Vb is: '  num2str(sqrt(Vb(1)^2 + Vb(2)^2))  ' cm/sec']);
+ disp(['Vc is: '  num2str(Vc)  ' cm/sec']);
+ 
+ 
+ 
+##### SOURCE END #####
+--></body></html>

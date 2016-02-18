@@ -1,0 +1,224 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>hw6_1</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-02-17"><meta name="DC.source" content="hw6_1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">HW 6 #1, Walter Coe, 2-17-16</a></li><li><a href="#2">Table P6-1 row c, pg. 328</a></li><li><a href="#3">Solve</a></li><li><a href="#4">Measure across theta2 range</a></li><li><a href="#5">Report</a></li></ul></div><h2>HW 6 #1, Walter Coe, 2-17-16<a name="1"></a></h2><pre class="codeinput"> clear; clc;
+</pre><h2>Table P6-1 row c, pg. 328<a name="2"></a></h2><pre class="codeinput">lengths = [3 10 6 8];
+omega2 = rad2deg(-15);
+p = [10*cosd(80) 10*sind(80)];
+</pre><h2>Solve<a name="3"></a></h2><pre class="codeinput">[angles, angularRates, lengths, linearRates, points, p, vp] = four_bar_func([0 90 0 0],omega2,lengths,p,[1 0])
+
+omega3_ = angularRates(3);
+omega4_ = angularRates(4);
+vpx = vp(1);
+vpy = vp(2);
+</pre><pre class="codeoutput">
+angles =
+
+         0   90.0000  -23.5814   71.7979
+
+
+angularRates =
+
+   1.0e+03 *
+
+         0   -0.8594   -2.7994   -1.5060
+
+
+lengths =
+
+     3    10     6     8
+
+
+linearRates =
+
+   1.0e+04 *
+
+         0         0
+    0.8594         0
+    1.1445   -0.3763
+         0         0
+
+
+points =
+
+         0         0
+         0   10.0000
+    5.4990    7.5997
+    3.0000         0
+
+
+p =
+
+    5.5312   18.3310
+
+
+vp =
+
+   1.0e+04 *
+
+    3.1917   -1.5484
+
+</pre><img vspace="5" hspace="5" src="hw6_1_01.png" alt=""> <h2>Measure across theta2 range<a name="4"></a></h2><pre class="codeinput">theta2 = 0:1:90;
+
+<span class="keyword">for</span> i=1:length(theta2)
+
+    [angles, angularRates, lengths, linearRates, points, p, vp] = four_bar_func([0 theta2(i) 0 0],omega2,lengths,p,[0 0]);
+
+    omega3(i) = angularRates(3);
+    omega4(i) = angularRates(4);
+    Vpx(i) = vp(1);
+    Vpy(i) = vp(2);
+    V2(i) = linearRates(2);
+
+<span class="keyword">end</span>
+</pre><h2>Report<a name="5"></a></h2><pre class="codeinput">disp([<span class="string">'omega3 is: '</span>, num2str(omega3_), <span class="string">' degrees per second'</span>]);
+disp([<span class="string">'omega4 is: '</span>, num2str(omega4_), <span class="string">' degrees per second'</span>]);
+disp([<span class="string">'Vpx is: '</span>, num2str(vp(1)), <span class="string">' cm per second'</span>]);
+disp([<span class="string">'Vpy is: '</span>, num2str(vp(2)), <span class="string">' cm per second'</span>]);
+
+figure(2); clf;
+plot(theta2, omega3, theta2, omega4);
+legend(<span class="string">'Omega3'</span>, <span class="string">'Omega4'</span>);
+xlabel(<span class="string">'theta2'</span>)
+ylabel(<span class="string">'angular rates in deg/sec'</span>)
+
+figure(3); clf;
+plot(theta2, Vpx, theta2, Vpy);
+legend(<span class="string">'Vpx'</span>, <span class="string">'Vpy'</span>);
+xlabel(<span class="string">'theta2'</span>)
+ylabel(<span class="string">'linear rates in cm/sec'</span>)
+<span class="comment">%</span>
+<span class="comment">% figure(4); clf;</span>
+<span class="comment">% plot(theta2, V2);</span>
+<span class="comment">% legend('V2');</span>
+<span class="comment">% xlabel('theta2')</span>
+<span class="comment">% ylabel('linear rates in deg/sec')</span>
+</pre><pre class="codeoutput">omega3 is: -2799.4495 degrees per second
+omega4 is: -1505.9711 degrees per second
+Vpx is: 30741.3203 cm per second
+Vpy is: -124840.0769 cm per second
+</pre><img vspace="5" hspace="5" src="hw6_1_02.png" alt=""> <img vspace="5" hspace="5" src="hw6_1_03.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% HW 6 #1, Walter Coe, 2-17-16
+ clear; clc;
+ 
+%% Table P6-1 row c, pg. 328
+
+lengths = [3 10 6 8];
+omega2 = rad2deg(-15);
+p = [10*cosd(80) 10*sind(80)];
+
+%% Solve
+[angles, angularRates, lengths, linearRates, points, p, vp] = four_bar_func([0 90 0 0],omega2,lengths,p,[1 0])
+
+omega3_ = angularRates(3);
+omega4_ = angularRates(4);
+vpx = vp(1);
+vpy = vp(2);
+
+%% Measure across theta2 range
+theta2 = 0:1:90;
+
+for i=1:length(theta2)
+
+    [angles, angularRates, lengths, linearRates, points, p, vp] = four_bar_func([0 theta2(i) 0 0],omega2,lengths,p,[0 0]);
+
+    omega3(i) = angularRates(3);
+    omega4(i) = angularRates(4);
+    Vpx(i) = vp(1);
+    Vpy(i) = vp(2);
+    V2(i) = linearRates(2);
+
+end
+
+%% Report
+
+disp(['omega3 is: ', num2str(omega3_), ' degrees per second']);
+disp(['omega4 is: ', num2str(omega4_), ' degrees per second']);
+disp(['Vpx is: ', num2str(vp(1)), ' cm per second']);
+disp(['Vpy is: ', num2str(vp(2)), ' cm per second']);
+
+figure(2); clf;
+plot(theta2, omega3, theta2, omega4);
+legend('Omega3', 'Omega4');
+xlabel('theta2')
+ylabel('angular rates in deg/sec')
+
+figure(3); clf;
+plot(theta2, Vpx, theta2, Vpy);
+legend('Vpx', 'Vpy');
+xlabel('theta2')
+ylabel('linear rates in cm/sec')
+% 
+% figure(4); clf;
+% plot(theta2, V2);
+% legend('V2');
+% xlabel('theta2')
+% ylabel('linear rates in deg/sec')
+##### SOURCE END #####
+--></body></html>

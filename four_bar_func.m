@@ -18,17 +18,14 @@ r2 = lengths(2);
 r3 = lengths(3);
 r4 = lengths(4);
 
-guess = [theta3 theta4];
+guess = [angles(3) angles(4)];
 
 optionsFsolve = optimset('Display', 'off');
 
 [unknowns] = fsolve(@four_bar_equations, guess, optionsFsolve, angles, lengths);
 
-theta3 = unknowns(1);
-theta4 = unknowns(2);
-
-angles(3) = theta3;
-angles(4) = theta4;
+angles(3) = unknowns(1);
+angles(4) = unknowns(2);
 
 pLength = sqrt(p(1)^2 + p(2)^2);
 % pAngle = rad2deg(atan2(p(1)*sind(angles(3)) + p(2)*sind(angles(3) + 90),p(1)*cosd(angles(3)) + p(2)*cosd(angles(3) + 90)));
