@@ -1,5 +1,6 @@
-function [angles, angularRates, lengths, linearRates, points, p] = four_bar_slider(angles, omega2, lengths, p, options)
-%[A3 L1 Xp Yp] = four_bar_slider(ANGLES, LENGTHS, P) will solve for an unknown angle (3)
+function [angles, angularRates, alpha3, lengths, linearRates, d_ddot, points, p] = four_bar_slider(angles, omega2, alpha2, lengths, p, options)
+%[angles, angularRates, lengths, linearRates, points, p] = four_bar_slider(angles, omega2, lengths, p, options)
+%will solve for an unknown angle (3)
 %and an unknown length (1) for a four bar mechanism and plot the mechanism
 %following standard convention. Xp and Yp are the x and y
 %locations of the point P which is on fixed to the link 2.
@@ -53,6 +54,18 @@ linearRates(1,:) = [0, 0];
 linearRates(2,:) = [lengths(2)*angularRates(2)*-sind(angles(2)), lengths(2)*angularRates(2)*cosd(angles(2))];
 linearRates(3,:) = [-lengths(2)*angularRates(2)*sind(angles(2))+lengths(3)*angularRates(3)*sind(angles(3)), 0];
 linearRates(4,:) = linearRates(3,:);
+
+
+alpha3 = (lengths(2)*alpha2*cosd(angles(2))-lengths(2)*(angularRates(2)^2)*sind(angles(2))+lengths(3)*(angularRates(3)^2)*sind(angles(3)))/(lengths(3)*cosd(angles(3)));
+d_ddot = -lengths(2)*alpha2*sind(angles(2))-lengths(2)*(angularRates(2)^2)*cosd(angles(2))+lengths(3)*alpha3*sind(angles(3))+lengths(3)*(angularRates(3)^2)*cosd(angles(3));
+
+
+
+
+
+
+
+
 
 
 if(options(1) == 1) %would you like to plot?

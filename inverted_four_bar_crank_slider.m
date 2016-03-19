@@ -1,4 +1,4 @@
-function [angles, angularRates, lengths, linearRates, points, p] = inverted_four_bar_crank_slider(angles, omega2, lengths, gamma, p, options)
+function [angles, angularRates, alpha3, alpha4, lengths, linearRates,b_dot, b_ddot, points, p] = inverted_four_bar_crank_slider(angles, omega2, alpha2, lengths, gamma, p, options)
 %[A3 L1 Xp Yp] = four_bar_slider(ANGLES, LENGTHS, P) will solve for an unknown angle (3)
 %and an unknown length (1) for a four bar mechanism and plot the mechanism
 %following standard convention. Xp and Yp are the x and y
@@ -45,6 +45,22 @@ linearRates(1,:) = [0, 0];
 linearRates(2,:) = [lengths(2)*angularRates(2)*-sind(angles(2)), lengths(2)*angularRates(2)*cosd(angles(2))];
 linearRates(3,:) = [lengths(4)*angularRates(4)*-sind(angles(4)), lengths(4)*angularRates(4)*cosd(angles(4))];
 linearRates(4,:) = [0, 0];
+
+b_dot_x = (linearRates(2,1)-linearRates(3,1));
+b_dot_y = (linearRates(2,2)-linearRates(3,2));
+
+b_dot = sqrt(b_dot_x^2 + b_dot_y^2)*sign(max([b_dot_x b_dot_y]));
+
+alpha3 = (r2*(alpha2*cosd(theta3-theta2)+(omega2^2)*sind(theta3-theta2))+r4*(angularRates(4)^2)*sind(angles(4)-theta3)-2*b_dot*angularRates(3))/...
+    lengths(3) + r4*cosd(theta3-angles(4));
+alpha4 = alpha3;
+
+b_ddot = (r2*(omega2^2)*(r3*cosd(theta3 - theta2)+lengths(3)*cosd(angles(4)-theta2))+r2*alpha2*(lengths(3)*sind(theta2-theta3)-lengths(4)*sind(angles(4)-angles(2)))...
+        +2*b_dot*lengths(4)*angularRates(4)*sind(angles(4)-angles(3))-(angularRates(4)^2)*(lengths(3)^2+lengths(4)^2+2*lengths(3)*lengths(4)*cosd(angles(4)-angles(3))))...
+        /(lengths(3) + lengths(4)*cosd(angles(3)-angles(4)));
+
+
+
 
 if(options(1) == 1) %would you like to plot?
     figure(1); clf;

@@ -6,7 +6,7 @@ clear; clc;
 theta2 = 15:1:60;
 
 for i = 1:length(theta2)
-    [angles, angularRates, lengths, linearRates, points, p] = four_bar_slider([0 theta2(i) 30 90], 1, [50 105 172 27], [0 0], 1);
+    [angles, angularRates, alpha3, lengths, linearRates, points, p] = four_bar_slider([0 theta2(i) 30 90], 1, 0, [50 105 172 27], [0 0], 1);
 
     V2(i,:) = linearRates(2,:);
     V3(i,:) = linearRates(3,:);

@@ -1,0 +1,216 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>hw7_1</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-03-03"><meta name="DC.source" content="hw7_1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">HW 7 #1</a></li><li><a href="#2">Given</a></li><li><a href="#3">Advancement Through Time</a></li><li><a href="#4">Calculate</a></li></ul></div><h2>HW 7 #1<a name="1"></a></h2><pre class="codeinput">clear; clc; clf;
+</pre><img vspace="5" hspace="5" src="hw7_1_01.png" alt=""> <h2>Given<a name="2"></a></h2><pre class="codeinput">angles = [0, 0, 15, 20];    <span class="comment">%3 and 4 are guesses</span>
+omega2 = 0;
+alpha2 = rad2deg(1);
+lengths = [15, 5, 12, 10];
+p = [4, -5];
+options = [0, 0, -1];
+</pre><h2>Advancement Through Time<a name="3"></a></h2><pre class="codeinput">Ts = .01;
+t = 0:Ts:10;
+
+omega2 = alpha2*t;
+theta2 = alpha2*(1/2)*t.^2 + omega2.*t;
+
+alpha2 = alpha2*ones(size(t));
+</pre><h2>Calculate<a name="4"></a></h2><pre class="codeinput">[angles, angularVelocity, angularAcceleration, lengths, linearVelocity, linearAcceleration, points, p, vp, ap] = four_bar_func([0 theta2(50) 0 0], omega2(50), alpha2(50), lengths, p, [1, 0, -1]);
+
+<span class="comment">% figure(3); clf;</span>
+<span class="comment">% plot(t, theta2);</span>
+<span class="comment">% hold on;</span>
+<span class="comment">% plot(t, omega2);</span>
+<span class="comment">% plot(t, alpha2);</span>
+
+<span class="keyword">for</span> i=1:length(t)
+
+    [angles, angularVelocity, angularAcceleration, lengths, linearVelocity, linearAcceleration, points, p, vp, ap] = four_bar_func([0 theta2(i) 0 0], omega2(i), alpha2(i), lengths, p, options);
+
+    calcAngVel(i) = angularVelocity(2);
+    calcLinVel(i, :) = linearVelocity(2, :);
+
+    calcP(i,:) = p;
+    calcVP(i,:) = vp;
+    calcAP(i,:) = ap;
+<span class="keyword">end</span>
+
+figure(2); clf;
+
+subplot(3,2,1)
+plot(t, calcP(:,1));
+xlabel(<span class="string">'t (sec)'</span>);
+ylabel(<span class="string">'X-Pos (cm)'</span>);
+hold <span class="string">on</span>;
+subplot(3,2,2)
+plot(t, calcP(:,2));
+xlabel(<span class="string">'t (sec)'</span>);
+ylabel(<span class="string">'Y-Pos (cm)'</span>);
+subplot(3,2,3)
+plot(t, calcVP(:,1));
+xlabel(<span class="string">'t (sec)'</span>);
+ylabel(<span class="string">'X-Vel (cm/s)'</span>);
+subplot(3,2,4)
+plot(t, calcVP(:,2));
+xlabel(<span class="string">'t (sec)'</span>);
+ylabel(<span class="string">'Y-Vel (cm/s)'</span>);
+subplot(3,2,5)
+plot(t, calcAP(:,1));
+xlabel(<span class="string">'t (sec)'</span>);
+ylabel(<span class="string">'X-Acc (cm/s^2)'</span>);
+subplot(3,2,6)
+plot(t, calcAP(:,2));
+xlabel(<span class="string">'t (sec)'</span>);
+ylabel(<span class="string">'Y-Acc (cm/s^2)'</span>);
+<span class="comment">% figure(4); clf;</span>
+<span class="comment">% plot(t, calcAngVel)</span>
+<span class="comment">% hold on;</span>
+<span class="comment">% plot(t, calcLinVel)</span>
+</pre><img vspace="5" hspace="5" src="hw7_1_02.png" alt=""> <img vspace="5" hspace="5" src="hw7_1_03.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% HW 7 #1
+
+clear; clc; clf;
+
+%% Given
+
+angles = [0, 0, 15, 20];    %3 and 4 are guesses
+omega2 = 0;
+alpha2 = rad2deg(1);
+lengths = [15, 5, 12, 10];
+p = [4, -5];
+options = [0, 0, -1];
+
+%% Advancement Through Time
+
+Ts = .01;
+t = 0:Ts:10;
+
+omega2 = alpha2*t;
+theta2 = alpha2*(1/2)*t.^2 + omega2.*t;
+
+alpha2 = alpha2*ones(size(t));
+
+%% Calculate
+
+[angles, angularVelocity, angularAcceleration, lengths, linearVelocity, linearAcceleration, points, p, vp, ap] = four_bar_func([0 theta2(50) 0 0], omega2(50), alpha2(50), lengths, p, [1, 0, -1]);
+
+% figure(3); clf;
+% plot(t, theta2);
+% hold on;
+% plot(t, omega2);
+% plot(t, alpha2);
+
+for i=1:length(t)
+    
+    [angles, angularVelocity, angularAcceleration, lengths, linearVelocity, linearAcceleration, points, p, vp, ap] = four_bar_func([0 theta2(i) 0 0], omega2(i), alpha2(i), lengths, p, options);
+    
+    calcAngVel(i) = angularVelocity(2);
+    calcLinVel(i, :) = linearVelocity(2, :);
+    
+    calcP(i,:) = p;
+    calcVP(i,:) = vp;
+    calcAP(i,:) = ap;   
+end
+
+figure(2); clf;
+
+subplot(3,2,1)
+plot(t, calcP(:,1));
+xlabel('t (sec)');
+ylabel('X-Pos (cm)');
+hold on;
+subplot(3,2,2)
+plot(t, calcP(:,2));
+xlabel('t (sec)');
+ylabel('Y-Pos (cm)');
+subplot(3,2,3)
+plot(t, calcVP(:,1));
+xlabel('t (sec)');
+ylabel('X-Vel (cm/s)');
+subplot(3,2,4)
+plot(t, calcVP(:,2));
+xlabel('t (sec)');
+ylabel('Y-Vel (cm/s)');
+subplot(3,2,5)
+plot(t, calcAP(:,1));
+xlabel('t (sec)');
+ylabel('X-Acc (cm/s^2)');
+subplot(3,2,6)
+plot(t, calcAP(:,2));
+xlabel('t (sec)');
+ylabel('Y-Acc (cm/s^2)');
+% figure(4); clf;
+% plot(t, calcAngVel)
+% hold on;
+% plot(t, calcLinVel)
+
+
+
+##### SOURCE END #####
+--></body></html>
