@@ -1,0 +1,137 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>hw10_1</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-03-21"><meta name="DC.source" content="hw10_1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">HW9 #10.1</a></li><li><a href="#2">Properties (_s = steel, _w = wood, _c = combined)</a></li></ul></div><h2>HW9 #10.1<a name="1"></a></h2><pre class="codeinput">clear; clc;
+</pre><h2>Properties (_s = steel, _w = wood, _c = combined)<a name="2"></a></h2><pre class="codeinput">den_w = .001122*.9;    <span class="comment">%slug/inch^3</span>
+den_s = 7850*1.12287e-6;     <span class="comment">%slug/inch^3 (kg/m^3-&gt;slug/in^3)</span>
+
+vol_w = 3.5*((pi/4)*1.25^2);    <span class="comment">%in^3</span>
+vol_s = 10*((pi/4)*1.25^2);     <span class="comment">%in^3</span>
+
+mass_w = vol_w*den_w;
+mass_s = vol_s*den_s;
+mass_c = mass_w+mass_s;
+
+cg_w = [10/2, 0, 0];
+cg_s = [10+(1.25/2), 0, 0];
+
+cg_c = (cg_w*mass_w + cg_s*mass_s)/(mass_c);
+
+disp([<span class="string">'Combined center of mass is: ['</span>, num2str(cg_c), <span class="string">'] inches along x, y, z axis'</span>])
+
+Izz_w = mass_w*(10^2)/3;    <span class="comment">%moment about the end</span>
+Izz_s = ((mass_s*(3.5)^2)/12) + mass_s*(cg_s(1)^2);   <span class="comment">%moment about center + PAT</span>
+
+Izz_c = Izz_w + Izz_s;
+
+disp([<span class="string">'Combined mass moment of inertia is: '</span>, num2str(Izz_c), <span class="string">' slug*in^2 about the z axis'</span>])
+
+k = sqrt(Izz_c / mass_c);
+
+disp([<span class="string">'Combined radius of gyration is: '</span>, num2str(k), <span class="string">' inches along the z axis'</span>])
+</pre><pre class="codeoutput">Combined center of mass is: [10.4082            0            0] inches along x, y, z axis
+Combined mass moment of inertia is: 12.4664 slug*in^2 about the z axis
+Combined radius of gyration is: 10.5264 inches along the z axis
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% HW9 #10.1
+
+clear; clc;
+
+%% Properties (_s = steel, _w = wood, _c = combined)
+
+den_w = .001122*.9;    %slug/inch^3
+den_s = 7850*1.12287e-6;     %slug/inch^3 (kg/m^3->slug/in^3)
+
+vol_w = 3.5*((pi/4)*1.25^2);    %in^3
+vol_s = 10*((pi/4)*1.25^2);     %in^3
+
+mass_w = vol_w*den_w;
+mass_s = vol_s*den_s;
+mass_c = mass_w+mass_s;
+
+cg_w = [10/2, 0, 0];
+cg_s = [10+(1.25/2), 0, 0];
+
+cg_c = (cg_w*mass_w + cg_s*mass_s)/(mass_c);
+
+disp(['Combined center of mass is: [', num2str(cg_c), '] inches along x, y, z axis'])
+
+Izz_w = mass_w*(10^2)/3;    %moment about the end
+Izz_s = ((mass_s*(3.5)^2)/12) + mass_s*(cg_s(1)^2);   %moment about center + PAT
+
+Izz_c = Izz_w + Izz_s;
+
+disp(['Combined mass moment of inertia is: ', num2str(Izz_c), ' slug*in^2 about the z axis'])
+
+k = sqrt(Izz_c / mass_c);
+
+disp(['Combined radius of gyration is: ', num2str(k), ' inches along the z axis'])
+
+##### SOURCE END #####
+--></body></html>
